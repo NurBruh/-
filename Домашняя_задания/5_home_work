@@ -1,0 +1,325 @@
+using System;
+using System.Security.Cryptography.X509Certificates;
+
+public interface IVehicle
+{
+    void Drive();
+    void Refuel();
+}
+
+public class Car : IVehicle
+{
+    public string Model { get; set; }
+    public string Brand { get; set; }
+    public string FuelType { get; set; }
+
+    public Car(string model, string brand, string fuelType)
+    {
+        Model = model;
+        Brand = brand;
+        FuelType = fuelType;
+    }
+
+    public void Drive()
+    {
+        Console.WriteLine($"{Brand} {Model} selected D.");
+    }
+
+    public void Refuel()
+    {
+        Console.WriteLine($"{Brand} {Model} refuel.");
+    }
+}
+
+public class Motorcycle : IVehicle
+{
+    public string Model { get; set; }
+    public string Brand { get; set; }
+    public string FuelType { get; set; }
+    public string BodyType { get; set; }
+
+    public Motorcycle(string model, string brand, string fuelType, string bodyType)
+    {
+        Model = model;
+        Brand = brand;
+        FuelType = fuelType;
+        BodyType = bodyType;
+    }
+
+    public void Drive()
+    {
+        Console.WriteLine($"{Brand} {Model} selected D.");
+    }
+
+    public void Refuel()
+    {
+        Console.WriteLine($"{Brand} {Model} refuel.");
+    }
+}
+
+public class Truck : IVehicle
+{
+    public string Model { get; set; }
+    public string Brand { get; set; }
+    public string FuelType { get; set; }
+    public float WeightMax { get; set; }
+
+    public Truck(string model, string brand, string fuelType, float weightMax)
+    {
+        Model = model;
+        Brand = brand;
+        FuelType = fuelType;
+        WeightMax = weightMax;
+    }
+
+    public void Drive()
+    {
+        Console.WriteLine($"{Brand} {Model} selected D.");
+    }
+
+    public void Refuel()
+    {
+        Console.WriteLine($"{Brand} {Model} refuel.");
+    }
+}
+
+public class Bus : IVehicle
+{
+    public string Model { get; set; }
+    public string Brand { get; set; }
+    public string FuelType { get; set; }
+    public int PassengerMax { get; set; }
+
+    public Bus(string model, string brand, string fuelType, int passengerMax)
+    {
+        Model = model;
+        Brand = brand;
+        FuelType = fuelType;
+        PassengerMax = passengerMax;
+    }
+
+    public void Drive()
+    {
+        Console.WriteLine($"{Brand} {Model} selected D.");
+    }
+
+    public void Refuel()
+    {
+        Console.WriteLine($"{Brand} {Model} refuel.");
+    }
+}
+
+public class Electro : IVehicle
+{
+    public string Model { get; set; }
+    public string Brand { get; set; }
+    public int PowerMax { get; set; }
+
+    public Electro(string model, string brand, int powerMax)
+    {
+        Model = model;
+        Brand = brand;
+        PowerMax = powerMax;
+    }
+
+    public void Drive()
+    {
+        Console.WriteLine($"{Brand} {Model} selected D.");
+    }
+
+    public void Refuel()
+    {
+        Console.WriteLine($"{Brand} {Model} recharge.");
+    }
+}
+
+public abstract class IVehicleCreator
+{
+    public abstract IVehicle CreateVehicle();
+}
+
+
+public class CarCreator : IVehicleCreator
+{
+    private string _model;
+    private string _brand;
+    private string _fuelType;
+
+    public CarCreator(string model, string brand, string fuelType)
+    {
+        _model = model;
+        _brand = brand;
+        _fuelType = fuelType;
+    }
+
+    public override IVehicle CreateVehicle()
+    {
+        return new Car(_model, _brand, _fuelType);
+    }
+}
+
+
+public class MotorcycleCreator : IVehicleCreator
+{
+    private string _model;
+    private string _brand;
+    private string _fuelType;
+    private string _bodyType;
+
+    public MotorcycleCreator(string model, string brand, string fuelType, string bodyType)
+    {
+        _model = model;
+        _brand = brand;
+        _fuelType = fuelType;
+        _bodyType = bodyType;
+    }
+
+    public override IVehicle CreateVehicle()
+    {
+        return new Motorcycle(_model, _brand, _fuelType, _bodyType);
+    }
+}
+
+public class TruckCreator : IVehicleCreator
+{
+    private string _model;
+    private string _brand;
+    private string _fuelType;
+    private float _weightMax;
+
+    public TruckCreator(string model, string brand, string fuelType, float weightMax)
+    {
+        _model = model;
+        _brand = brand;
+        _fuelType = fuelType;
+        _weightMax = weightMax;
+
+
+    }
+
+    public override IVehicle CreateVehicle()
+    {
+
+        return new Truck(_model, _brand, _fuelType, _weightMax);
+    }
+}
+
+
+
+public class BusCreator : IVehicleCreator
+{
+    private string _model;
+    private string _brand;
+    private string _fuelType;
+    private int _passengerMax;
+
+    public BusCreator(string model, string brand, string fuelType, int passengerMax)
+    {
+        _model = model;
+        _brand = brand;
+        _fuelType = fuelType;
+        _passengerMax = passengerMax;
+    }
+
+    public override IVehicle CreateVehicle()
+    {
+        return new Bus(_model, _brand, _fuelType, _passengerMax);
+    }
+
+
+
+}
+
+public class ElectroCreator : IVehicleCreator
+{
+    private string _model;
+    private string _brand;
+    private int _powerMax;
+
+    public ElectroCreator(string model, string brand, int powerMax)
+    {
+        _model = model;
+        _brand = brand;
+        _powerMax = powerMax;
+    }
+
+    public override IVehicle CreateVehicle()
+    {
+        return new Electro(_model, _brand, _powerMax);
+    }
+
+}
+
+public enum VehicleType
+{
+    Car, Motorcycle, Truck, Bus, Electro
+}
+
+internal class Program
+{
+    static void Main(string[] args)
+    {
+        //CreateVehicle(VehicleType.Car).Drive();
+        //CreateVehicle(VehicleType.Motorcycle).Drive();
+        //CreateVehicle(VehicleType.Truck).Drive();
+        //CreateVehicle(VehicleType.Bus).Drive();
+        //CreateVehicle(VehicleType.Electro).Drive();
+
+        Console.WriteLine("Vehicle type: ");
+        string userInput = Console.ReadLine();
+
+        if (Enum.TryParse(userInput, true, out VehicleType vehicleType))
+        {
+            IVehicle vehicle = CreateVehicle(vehicleType);
+            vehicle.Drive();
+        }
+        else
+        {
+            Console.WriteLine("Invalid");
+        }
+
+
+    }
+    public static IVehicle CreateVehicle(VehicleType vehicleType)
+    {
+        IVehicleCreator creator = null;
+        IVehicle vehicle = null;
+
+        switch (vehicleType)
+        {
+            case VehicleType.Car:
+                Console.WriteLine("Model, brand, fuel type:");
+                var carInput = Console.ReadLine().Split(',');
+                creator = new CarCreator(carInput[0].Trim(), carInput[1].Trim(), carInput[2].Trim());
+                break;
+
+            case VehicleType.Motorcycle:
+                Console.WriteLine("Model, brand, fuel type, body type:");
+                var motorcycleInput = Console.ReadLine().Split(',');
+                creator = new MotorcycleCreator(motorcycleInput[0].Trim(), motorcycleInput[1].Trim(), motorcycleInput[2].Trim(), motorcycleInput[3].Trim());
+                break;
+
+            case VehicleType.Truck:
+                Console.WriteLine("Model, brand, fuel type, max weight:");
+                var truckInput = Console.ReadLine().Split(',');
+                creator = new TruckCreator(truckInput[0].Trim(), truckInput[1].Trim(), truckInput[2].Trim(), float.Parse(truckInput[3].Trim()));
+                break;
+
+            case VehicleType.Bus:
+                Console.WriteLine("Model, brand, fuel type, max passengers:");
+                var busInput = Console.ReadLine().Split(',');
+                creator = new BusCreator(busInput[0].Trim(), busInput[1].Trim(), busInput[2].Trim(), int.Parse(busInput[3].Trim()));
+                break;
+
+            case VehicleType.Electro:
+                Console.WriteLine("Model, brand, max power:");
+                var electroInput = Console.ReadLine().Split(',');
+                creator = new ElectroCreator(electroInput[0].Trim(), electroInput[1].Trim(), int.Parse(electroInput[2].Trim()));
+                break;
+
+            default:
+                throw new Exception("ERROR 500.");
+        }
+        return creator.CreateVehicle();
+    }
+}
