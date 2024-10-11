@@ -1,0 +1,61 @@
+using System;
+using System.IO;
+
+public enum LogLevel { INFO, WARNING, ERROR }
+
+public class Logger
+{
+    private static Logger _instance;
+    private static readonly object _lock = new object();
+    private LogLevel _level = LogLevel.INFO;
+
+    private Logger() { }
+
+    public static Logger GetInstance()
+    {
+        if (_instance == null)
+        {
+            lock (_lock)
+            {
+                if (_instance == null)
+                {
+                    _instance = new Logger();
+                }
+            }
+        }
+
+        return _instance;
+    }
+
+    public void SetLogLevel(LogLevel level)
+    {
+        lock (_lock)
+        {
+            _level = level;
+        }
+    }
+
+    public void Log(string message, LogLevel level)
+    {
+        if (level >= _level)
+        {
+            lock (_lock)
+            {
+                File.AppendAllText(@"C:\br0h\nuke.txt", $"[{level}] {message}{Environment.NewLine}");
+            }
+        }
+    }
+}
+
+internal class Program
+{
+    static void Main(string[] args)
+    {
+        Logger logger = Logger.GetInstance();
+        logger.SetLogLevel(LogLevel.WARNING);
+
+        logger.Log("WARNING NUCLEAR", LogLevel.WARNING);
+        logger.Log("INFO NUCLEAR ACTIVATED", LogLevel.INFO);
+        logger.Log("NUCLEAR DEACTIVATED", LogLevel.ERROR);
+    }
+}
