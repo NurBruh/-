@@ -105,6 +105,11 @@ public class Author
     {
         return "Автор: " + Name;
     }
+
+    public string GetAuthor()
+    {
+        return Name;
+    }
 }
 
 public class Book
@@ -131,7 +136,7 @@ public class Book
 
     public string GetBookInfo()
     {
-        string authors = string.Join(", ", Authors.ConvertAll(a => a.Name));
+        string authors = string.Join(", ", Authors.ConvertAll(a => a.GetAuthor()));
         string status = IsAvailable ? "Доступна" : "Недоступна";
         return $"Название: {Title}, ISBN: {ISBN}, Авторы: {authors}, Год: {PublicationYear}, Статус: {status}";
     }
